@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Contract</title>
+    <style>
+        .heading{
+            position: relative;
+            display: flex;
+            flex-flow: row;
+            justify-content: space-between;
+            align-items: center;
+            width: calc(100vw - 20px);
+            height: 60px;
+            /* border: 1px solid red; */
+        }
+        #create-contract {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #00bbf0;
+            color: white
+        }
+        .main{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            /* flex-direction: row; */
+            width: calc(100vw - 20px);
+            height: max-content;
+            min-height: calc(100vh - 100px);
+            /* padding: 20px; */
+            /* background-color: #f9f9f915; */
+            border-radius: 10px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+            /* border: 1px solid red; */
+        }
+        .c1{
+            color: white;
+            width: 40%;
+            height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #f9f9f915;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #8c8c8c;
+            /* border: 1px solid red; */
+
+        }
+        .c2{
+            color: white;
+            width: 50%;
+            height: calc(100vh - 180px);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #f9f9f915;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #8c8c8c;
+        }
+        .creator {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+        }
+        .creator_input{
+            margin-right: 10px;
+            border-radius: 2px;
+            border: 1px solid #8c8c8c4a;
+            padding: 5px;
+            height: 25px;
+            /* width: 200px; */
+            color: white;
+            background-color: rgb(4, 0, 54);
+        }
+        #wallet-select {
+            margin-top: 10px;
+            padding: 5px;
+            border-radius: 2px;
+            border: 1px solid #8c8c8c4a;
+            background-color: rgb(4, 0, 54);
+            color: white;
+            width: 250px;
+        }
+        .participants {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            /* border: 1px solid red; */
+            justify-content: space-between;
+            height: 100%;
+            position: relative;
+
+        }
+        .participant-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .participant-container input {
+            margin-right: 10px;
+            border-radius: 2px;
+            border: 1px solid #8c8c8c4a;
+            padding: 5px;
+            height: 25px;
+            /* width: 200px; */
+            color: white;
+            background-color: rgb(4, 0, 54);
+        }
+        .name {
+            width: 200px;
+        }
+        .wallet {
+            width: 300px;
+        }
+        .remove-participant {
+            margin-left: 10px;
+            cursor: pointer;
+            background-image: url("images/remove-icon.png");
+            background-size: cover;
+            width: 25px;
+            height: 25px;
+            border-radius: 20px;
+            background-color: red;
+        }
+        #file-upload {
+            margin-top: 20px;
+        }
+        .button_ui {
+            width: 150px;
+            height: 40px;
+            margin-top: 20px;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #26ffe2;
+            color: rgb(49, 49, 49);
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+            border: none;
+        }
+        #file-upload input[type="file"] {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #00bbf0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 150px;
+            height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        body {
+            background-image: url("images/hero-bg.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            backdrop-filter: blur(100px);
+            background-position: top;
+            margin: 0;
+            padding: 0;
+
+        }
+    </style>
+    <div class="heading">
+        <h1 style="color: white;"> &nbsp; &nbsp; &nbsp; Create Contract</h1>
+        <button class="button_ui" id="create-contract">Create Contract</button>
+    </div>
+
+    <dev class="main">
+        <div class="c1">
+            <div class="creator">
+                <h3>Contract creator (Your Name)</h3>
+                <input class="name creator_input" type="text" placeholder="Creator Name">
+                <h3>Wallet Address</h3>
+                <select id="wallet-select">
+                    <option value="">Select Wallet Address</option>
+                </select>
+            </div>
+            <div class="participants">
+                <div id="participants">
+                    <div class="participant-container">
+                        <input class="name" type="text" placeholder="Participant Name">
+                        <input class="wallet" type="text" placeholder="Ethereum Wallet">
+                        <div class="remove-participant"></div>
+                    </div>
+                </div>
+                <button class="button_ui" id="add-participant">Add Participant</button>
+            </div>
+        </div>
+    
+        <div class="c2">
+            <div class="uploadedfile">
+                <h2>Uploaded Files</h2>
+                <ul>
+                    <li>File 1</li>
+                    <li>File 2</li>
+                    <li>File 3</li>
+                </ul>
+            </div>
+            <div id="file-upload">
+                <input type="file" multiple>
+            </div>
+        </div>
+    </dev>
+
+    <script>
+        document.getElementById('add-participant').addEventListener('click', function() {
+            var participantsContainer = document.getElementById('participants');
+            var participantContainer = document.createElement('div');
+            participantContainer.classList.add('participant-container');
+            participantContainer.innerHTML = `
+                <input class="name" type="text" placeholder="Participant Name">
+                <input class="wallet" type="text" placeholder="Ethereum Wallet">
+                <div class="remove-participant"></div>
+            `;
+            participantsContainer.appendChild(participantContainer);
+        });
+
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('remove-participant')) {
+                var participantContainer = event.target.parentNode;
+                participantContainer.remove();
+            }
+        });
+        document.getElementById('create-contract').addEventListener('click', function() {
+            var creatorName = document.querySelector('.creator_input').value;
+            var walletAddress = document.querySelector('#wallet-select').value;
+            var participants = [];
+
+            var participantContainers = document.querySelectorAll('.participant-container');
+            participantContainers.forEach(function(container) {
+                var participantName = container.querySelector('.name').value;
+                var participantWallet = container.querySelector('.wallet').value;
+                participants.push({
+                    name: participantName,
+                    wallet: participantWallet
+                });
+            });
+
+            var contractData = {
+                creator: {
+                    name: creatorName,
+                    wallet: walletAddress
+                },
+                participants: participants
+            };
+
+            var jsonData = JSON.stringify(contractData);
+            var blob = new Blob([jsonData], { type: 'application/json' });
+            var url = URL.createObjectURL(blob);
+
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'contract.json';
+            a.click();
+        });
+    </script>
+</body>
+</html>
