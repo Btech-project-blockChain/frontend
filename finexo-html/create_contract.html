@@ -17,6 +17,13 @@
             cursor: pointer;
             padding: 5px 10px;
             background-color: #00bbf0;
+            color: white;
+            display: none;
+        }
+        #connectButton {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #00bbf0;
             color: white
         }
         .main{
@@ -44,6 +51,8 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 1px solid #8c8c8c;
+            backdrop-filter: blur(100px);
+
             /* border: 1px solid red; */
 
         }
@@ -58,6 +67,8 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border: 1px solid #8c8c8c;
+            backdrop-filter: blur(100px);
+
         }
         .creator {
             margin-bottom: 20px;
@@ -69,21 +80,21 @@
         .creator_input{
             margin-right: 10px;
             border-radius: 2px;
-            border: 1px solid #8c8c8c4a;
+            border: 1px solid #8c8c8c00;
             padding: 5px;
             height: 25px;
             /* width: 200px; */
             color: white;
-            background-color: rgb(4, 0, 54);
+            background-color: rgb(3, 26, 36);
         }
         #wallet-select {
             margin-top: 10px;
             padding: 5px;
             border-radius: 2px;
-            border: 1px solid #8c8c8c4a;
-            background-color: rgb(4, 0, 54);
+            border: 1px solid #8c8c8c00;
+            background-color: rgb(3, 26, 36);
             color: white;
-            width: 250px;
+            width: 350px;
         }
         .participants {
             display: flex;
@@ -103,12 +114,12 @@
         .participant-container input {
             margin-right: 10px;
             border-radius: 2px;
-            border: 1px solid #8c8c8c4a;
+            border: 1px solid #8c8c8c00;
             padding: 5px;
             height: 25px;
             /* width: 200px; */
             color: white;
-            background-color: rgb(4, 0, 54);
+            background-color: rgb(3, 26, 36);
         }
         .name {
             width: 200px;
@@ -143,7 +154,7 @@
             bottom: 0px;
             border: none;
         }
-        #file-upload input[type="file"] {
+        .custom-file-input {
             cursor: pointer;
             padding: 5px 10px;
             background-color: #00bbf0;
@@ -153,15 +164,19 @@
             width: 150px;
             height: 40px;
         }
+        #files {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <style>
         body {
-            background-image: url("images/hero-bg.png");
+            background-image: url("images/bg3.png");
             background-repeat: no-repeat;
             background-size: cover;
-            backdrop-filter: blur(100px);
+            background-position: center;
+            /* backdrop-filter: blur(100px); */
             background-position: top;
             margin: 0;
             padding: 0;
@@ -170,17 +185,20 @@
     </style>
     <div class="heading">
         <h1 style="color: white;"> &nbsp; &nbsp; &nbsp; Create Contract</h1>
+        <button class="button_ui" id="connectButton" style="cursor: pointer; padding: 5px 10px; background-color: #00bbf0; color: white;">Connect Wallet</button>
         <button class="button_ui" id="create-contract">Create Contract</button>
     </div>
 
     <dev class="main">
         <div class="c1">
             <div class="creator">
-                <h3>Contract creator (Your Name)</h3>
+                <br>
+                <h3 style="padding: 0%; margin: 0px 0px 10px 0px;">Contract creator (Your Name)</h3>
                 <input class="name creator_input" type="text" placeholder="Creator Name">
-                <h3>Wallet Address</h3>
-                <select id="wallet-select">
-                    <option value="">Select Wallet Address</option>
+                <br>
+                <h3 style="padding: 0%; margin: 0%;">Select your Wallet Address</h3>
+                <select id="wallet-select" title="Select Wallet Address">
+                    <!-- <option value=""></option> -->
                 </select>
             </div>
             <div class="participants">
@@ -205,7 +223,8 @@
                 </ul>
             </div>
             <div id="file-upload">
-                <input type="file" multiple>
+                <label for="files" class="custom-file-input">Select Files</label>
+                <input id="files" type="file" multiple>
             </div>
         </div>
     </dev>
@@ -222,13 +241,18 @@
             `;
             participantsContainer.appendChild(participantContainer);
         });
-
         document.addEventListener('click', function(event) {
             if (event.target.classList.contains('remove-participant')) {
                 var participantContainer = event.target.parentNode;
                 participantContainer.remove();
             }
         });
+        document.getElementById('files').addEventListener('change', function() {
+        const files = Array.from(this.files).map(file => file.name).join(', ');
+        document.querySelector('.file-names').textContent = files;
+        });
+
+        /// For creating Json file while clicking on create contract button
         document.getElementById('create-contract').addEventListener('click', function() {
             var creatorName = document.querySelector('.creator_input').value;
             var walletAddress = document.querySelector('#wallet-select').value;
@@ -261,6 +285,9 @@
             a.download = 'contract.json';
             a.click();
         });
+        
+        /// meta mask part
     </script>
+    <script src="js/metamask_task.js"></script>
 </body>
 </html>
