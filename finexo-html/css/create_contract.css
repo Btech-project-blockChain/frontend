@@ -1,0 +1,248 @@
+.heading{
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 20px);
+    height: 60px;
+    /* border: 1px solid red; */
+}
+#create-contract {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #00bbf0;
+    color: white;
+    /* display: none; */
+}
+.main{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* flex-direction: row; */
+    width: calc(100vw - 20px);
+    height: max-content;
+    min-height: calc(100vh - 100px);
+    /* padding: 20px; */
+    /* background-color: #f9f9f915; */
+    border-radius: 10px;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* border: 1px solid red; */
+}
+.c1{
+    color: white;
+    width: 40%;
+    height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f915;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #8c8c8c;
+    backdrop-filter: blur(100px);
+
+    /* border: 1px solid red; */
+
+}
+.c2{
+    color: white;
+    width: 50%;
+    height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f9f9f915;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #8c8c8c;
+    backdrop-filter: blur(100px);
+
+}
+.creator {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+.creator_input{
+    margin-right: 10px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    border: 1px solid #767676;
+    padding: 5px;
+    height: 25px;
+    /* width: 200px; */
+    color: white;
+    background-color: rgb(28, 30, 30);
+}
+#wallet-select {
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 2px;
+    border: 1px solid #8c8c8c00;
+    background-color: rgb(3, 26, 36);
+    color: white;
+    width: 350px;
+    color: white;
+    background-color: rgb(28, 30, 30);
+}
+.participants {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* border: 1px solid red; */
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
+
+}
+#add-participant {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+.participant-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.participant-container input {
+    margin-right: 10px;
+    border-radius: 2px;
+    border: 1px solid #767676;
+    padding: 5px;
+    height: 25px;
+    /* width: 200px; */
+    color: white;
+    background-color: rgb(28, 30, 30);
+}
+.name {
+    width: 200px;
+}
+.wallet {
+    width: 300px;
+}
+.remove-participant {
+    margin-left: 10px;
+    cursor: pointer;
+    background-image: url("../images/remove-icon.png");
+    background-size: cover;
+    width: 25px;
+    height: 25px;
+    border-radius: 20px;
+    background-color: red;
+}
+#file-upload {
+    margin-top: 20px;
+}
+.button_ui {
+    width: 150px;
+    height: 40px;
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+    /* background-color: #26ffe2;
+    color: rgb(49, 49, 49); */
+    background-color: #0b5e53;
+    color: white;
+    border: none;
+    font-size: 16px;
+    box-shadow: #074a4135 0px 19px 20px, rgba(5, 22, 22, 0.22) 0px 15px 12px;
+}
+#connectButton {
+    cursor: pointer;
+    padding: 5px 10px;
+    width: 150px;
+    height: 30px;
+    font-size: medium;
+    background-color: #0b5e53;
+    color: white;
+}
+
+.custom-file-input {
+    cursor: pointer;
+    padding: 5px 10px;
+    background-color: #00bbf0;
+    background-color: #0b5e53;
+    color: white;
+    /* color: #000; */
+    border: none;
+    border-radius: 5px;
+    width: 75px;
+    height: 20px;
+    /* position: absolute;
+    right: 15px;
+    bottom: 4px; */
+    right: 0px;
+    
+}
+#selectedFile{
+    display: flex;
+    justify-content: space-around;
+    font-size: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px; /* Adjust gap between items as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 20px);
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+    /* grid-auto-flow: dense; */
+    align-items: center;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    padding: 5px 5px;
+    border-radius: 10px;
+    margin: 5px;
+    color: #333;
+    width: 170px;
+    height: 90px;
+    width: calc(100% - 20px);
+    justify-content: space-between;
+}
+
+/* Style for the close icon */
+.close-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    position: relative;
+    top: -50px;
+    right: -px;
+    color: red;
+    font-size: 25px;
+}
+
+.tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Show tooltip when hovering over file item */
+.file-item:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+#files {
+    display: none;
+}

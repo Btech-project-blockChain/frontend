@@ -15,15 +15,16 @@ async function checkConnection() {
       // Request access to the user's accounts
       const accounts = await ethereum.request({ method: 'eth_accounts' });
       if (accounts.length > 0) {
-        console.log('Connected with MetaMask:', accounts[0]);
-        var select = document.getElementById("wallet-select");
-        for (var i = 0; i < accounts.length; i++) {
-            var option = document.createElement("option");
-            option.text = "Account " + (i+1) + ": " + accounts[i];
-            option.value = accounts[i];
-            select.add(option);
-        }
-        return accounts[0];
+        // console.log('Connected with MetaMask:', accounts[0]);
+        // var select = document.getElementById("wallet-select");
+        // for (var i = 0; i < accounts.length; i++) {
+        //     var option = document.createElement("option");
+        //     option.text = "Account " + (i+1) + ": " + accounts[i];
+        //     option.value = accounts[i];
+        //     select.add(option);
+        // }
+        // return accounts[0];
+        updateWalletSelect(accounts);
       } else {
         console.log('User is not connected.');
         return null;
@@ -40,17 +41,28 @@ function connectMetaMask() {
     .then(accounts => {
         console.log('accounts are', accounts);
         console.log('Connected with MetaMask:', accounts[0]);
-        console.log('Connected with MetaMask:', accounts[1]);
-        
+        updateWalletSelect(accounts);        
     })
     .catch(error => {
         console.error('Error connecting with MetaMask:', error);
     });
 }
 
+function updateWalletSelect(accounts) {
+  var select = document.getElementById("wallet-select");
+  select.innerHTML = ""; // Clear existing options
+  accounts.forEach((account, index) => {
+      var option = document.createElement("option");
+      option.text = "Account " + (index + 1) + ": " + account;
+      option.value = account;
+      select.add(option);
+  });
+}
+
+
 const connectButton = document.getElementById('connectButton');
 connectButton.addEventListener('click', async () => {
-    connectMetaMask()
+    connectMetaMask();
 });
 
 checkMetaMask();

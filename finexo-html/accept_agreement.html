@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accept Agreement</title>
+    <link rel="stylesheet" href="css/accept_agreement.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agreement Acceptance</h1>
+        <p>Please upload the agreement file (ZIP) to verify and accept.</p>
+        <div id="file-drop" class="dropzone">
+            Drag and drop file here or <input type="file" id="file-upload">
+        </div>
+        <p id="file-info">No file selected.</p>
+        <p id="hash-info">Hash: </p>
+        <button id="accept-button" disabled>Accept Agreement</button>
+        <p id="agreement-status"></p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script>
+        /// when file is chossen of dragged and dropped md5 hash must be calculated and file must be zip file only
+        var md5Hash = '';
+        var fileInputElement = document.getElementById('file-upload');
+        fileInputElement.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file.type !== 'application/zip') {
+                console.log(file.type);
+                alert('Please select a ZIP file.');
+                fileInputElement.value = '';
+                return;
+            }
+            document.getElementById('file-info').textContent = file.name;
+            calculateMD5(file).then(hash => {
+                md5Hash = hash;
+                document.getElementById('hash-info').textContent = 'Hash: ' + hash;
+                document.getElementById('accept-button').disabled = false;
+            });
+        });
+        
+
+        function calculateMD5(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const fileData = event.target.result;
+                    const wordArray = CryptoJS.lib.WordArray.create(fileData);
+                    const hash = CryptoJS.MD5(wordArray).toString(CryptoJS.enc.Hex);
+                    resolve(hash);
+                };
+                reader.onerror = function(event) {
+                    reject(event.target.error);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+    </script>
+</body>
+</html>
