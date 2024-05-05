@@ -53,7 +53,7 @@ function updateWalletSelect(accounts) {
   select.innerHTML = ""; // Clear existing options
   accounts.forEach((account, index) => {
       var option = document.createElement("option");
-      option.text = "Account " + (index + 1) + ": " + account;
+      option.text = account;
       option.value = account;
       select.add(option);
   });

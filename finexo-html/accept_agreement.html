@@ -12,32 +12,17 @@
             Drag and drop file here or <input type="file" id="file-upload">
         </div>
         <p id="file-info">No file selected.</p>
-        <p id="hash-info">Hash: </p>
-        <button id="accept-button" disabled>Accept Agreement</button>
+        <p id="hash-info">Agreement ID:  </p>
+        <button id="accept-button"  disabled>Accept Agreement</button>
         <p id="agreement-status"></p>
+        <div id="participants"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+    <script src="js/evm_ABI_function_calling.js"></script>
     <script>
-        /// when file is chossen of dragged and dropped md5 hash must be calculated and file must be zip file only
-        var md5Hash = '';
-        var fileInputElement = document.getElementById('file-upload');
-        fileInputElement.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file.type !== 'application/zip') {
-                console.log(file.type);
-                alert('Please select a ZIP file.');
-                fileInputElement.value = '';
-                return;
-            }
-            document.getElementById('file-info').textContent = file.name;
-            calculateMD5(file).then(hash => {
-                md5Hash = hash;
-                document.getElementById('hash-info').textContent = 'Hash: ' + hash;
-                document.getElementById('accept-button').disabled = false;
-            });
-        });
-        
-
+        var md5Hash = "";
+        // Function to calculate MD5 hash
         function calculateMD5(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -53,6 +38,73 @@
                 reader.readAsArrayBuffer(file);
             });
         }
+
+        // Function to handle file selection
+        document.getElementById('file-upload').addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (file.type !== 'application/zip') {
+                console.log(file.type);
+                alert('Please select a ZIP file.');
+                this.value = '';
+                return;
+            }
+            document.getElementById('file-info').textContent = "Agreement File :- " + file.name;
+            md5Hash = await calculateMD5(file);
+            document.getElementById('hash-info').textContent = 'Agreement ID: ' + md5Hash;
+
+            // Call contract function to check agreement details
+            loadAgreement(md5Hash);
+        });
+
+        async function loadAgreement(md5Hash) {
+            try {
+                const result = await getAgreementDetails(md5Hash);
+                if (result != ""){
+                    const creatorAddress = result[0];
+                    const acceptors = result[1];
+                    const acceptanceStatus = result[2];
+                    const userAddress = await signer.getAddress();
+                    document.getElementById('participants').innerHTML = '<h3>Participants:</h3>';
+                    console.log('Creator:', creatorAddress);
+                    for (let i = 0; i < acceptors.length; i++) {
+                        console.log('Acceptor:', acceptors[i], 'Accepted:', acceptanceStatus[i]);
+                        if (acceptors[i] == userAddress) {
+                            console.log('You are a participant.');
+                            console.log('Acceptance status:', acceptanceStatus[i]);
+                            if (acceptanceStatus[i]) {
+                                document.getElementById('participants').innerHTML += `<p><span style="color:green;">&#x2714; Accepted &nbsp; &nbsp; &nbsp;</span> <span style="color:Blue;"> (You) </span>  ${acceptors[i]}</p>`;
+                                document.getElementById('accept-button').disabled = true;
+                            } else {
+                                document.getElementById('participants').innerHTML += `<p> <span style="color:red;">&#x274C; Not Accepted </span> <span style="color:Blue;"> (You) </span> ${acceptors[i]}</p>`;
+                                document.getElementById('accept-button').disabled = false;
+                            }
+                        } else {
+                            document.getElementById('participants').innerHTML += `<p> <span style="color:red;">&#x274C; Not Accepted </span> ${acceptors[i]}</p>`;
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error getting agreement details:', error);
+            }
+        }
+        // Function to accept agreement
+        document.getElementById('accept-button').addEventListener('click', async function() {
+            try {
+                if (md5Hash == "") {
+                    alert('Please select a file.');
+                    return;
+                }
+                acceptAgreement(md5Hash).then(() => {
+                    console.log('Agreement accepted. Refreshing agreement details.');
+                    setTimeout(() => {
+                        loadAgreement(md5Hash);
+                    }, 3000);
+                    
+                });
+            } catch (error) {
+                console.error('Error accepting agreement:', error);
+            }
+        });
 
     </script>
 </body>

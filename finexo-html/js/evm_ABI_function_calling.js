@@ -33,6 +33,7 @@ const network = provider.getNetwork().then((network) => {
 
 // Example of calling a function
 async function createAgreement_(agreementId, acceptors, creatorWalletAddres) {
+    console.log("Creating agreement with Wallet:", creatorWalletAddres);
     var contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
     try {
         const createTx = await contractInstance.createAgreement(agreementId, acceptors, {from: creatorWalletAddres});
@@ -46,7 +47,7 @@ async function createAgreement_(agreementId, acceptors, creatorWalletAddres) {
 async function acceptAgreement(agreementId) {
     var contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
     try {
-        const acceptTx = await contractInstance.methods.acceptAgreement(agreementId).send({from: 'YOUR_SENDER_ADDRESS'});
+        const acceptTx = await contractInstance.acceptAgreement(agreementId, {from: await signer.getAddress()});
         console.log('Transaction hash:', acceptTx.transactionHash);
     } catch (error) {
         console.error('Error accepting agreement:', error);
@@ -57,11 +58,25 @@ async function acceptAgreement(agreementId) {
 async function hasAccepted(agreementId, acceptor) {
     var contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
     try {
-        const result = await contractInstance.methods.hasAccepted(agreementId, acceptor).call();
+        const result = await contractInstance.hasAccepted(agreementId, acceptor).call();
         console.log('Has accepted:', result);
     } catch (error) {
         console.error('Error checking acceptance status:', error);
     }
 }
 
-// "0x77b30f80dc3E4D05f9AC395ed3F75Bd1aa3F3800"
+// Function to get agreement details
+async function getAgreementDetails(agreementId) {
+    var contractInstance = new ethers.Contract(contractAddress, contractABI, provider);
+    try {
+        const result = await contractInstance.getAgreementDetails(agreementId);
+        console.log('Agreement details:', result);
+        // result[0] will contain the address of the creator
+        // result[1] will contain an array of acceptor addresses
+        // result[2] will contain an array of boolean values indicating acceptance status
+        return result ? result : ""; // Return result if it exists, otherwise return empty string
+    } catch (error) {
+        console.error('Error getting agreement details:', error);
+        return ""; // Return empty string in case of error
+    }
+}

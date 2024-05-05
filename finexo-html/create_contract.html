@@ -26,8 +26,6 @@
 </style>
 <body>
     <div class="bgc">
-
-    
     <div class="heading">
         <h1 style="color: white; padding-top: 15px;"> &nbsp; &nbsp; &nbsp; Create Contract</h1>
         
@@ -73,6 +71,16 @@
             <button class="button_ui" id="create-contract">Submit Contract</button>
         </div>
     </dev>
+
+    <div id="blurb">
+        <div id="created_popup">
+            <h1>Agreement Created Successfully</h1>
+            <p>Please select the downloaded ZIP file to track the agreement on the Agreement Accept page.</p>
+            <br>
+            <br>
+            <button id="ok-button">OK</button>
+        </div>
+    </div>
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
@@ -286,7 +294,9 @@
                             link.click();
                             // Clean up the URL object
                             URL.revokeObjectURL(zipUrl);
-                            createAgreement_(zipHash, participantWalletAddresses, walletAddress);
+                            createAgreement_(zipHash, participantWalletAddresses, walletAddress).then(result =>{
+                                document.getElementById('blurb').style.display = 'block';
+                            });
                         })
                         .catch(error => {
                             console.error("Error calculating hash:", error);
@@ -322,6 +332,11 @@
                 return str; // If the string length is within the limit, return the original string
             }
         }  
+        
+        // OK button click event handler
+        document.getElementById('ok-button').addEventListener('click', function() {
+            window.location.href = 'accept_agreement.html';
+        });
     </script>
     <script src="js/metamask_task.js"></script>
 </body>
