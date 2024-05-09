@@ -42,12 +42,12 @@
         // Function to handle file selection
         document.getElementById('file-upload').addEventListener('change', async function(event) {
             const file = event.target.files[0];
-            if (file.type !== 'application/zip') {
-                console.log(file.type);
-                alert('Please select a ZIP file.');
-                this.value = '';
-                return;
-            }
+            // if (file.type !== 'application/zip') {
+            //     console.log(file.type);
+            //     alert('Please select a ZIP file.');
+            //     this.value = '';
+            //     return;
+            // }
             document.getElementById('file-info').textContent = "Agreement File :- " + file.name;
             md5Hash = await calculateMD5(file);
             document.getElementById('hash-info').textContent = 'Agreement ID: ' + md5Hash;
