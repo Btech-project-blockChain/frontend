@@ -22,6 +22,7 @@
     <script src="js/evm_ABI_function_calling.js"></script>
     <script>
         var md5Hash = "";
+        var loaded = false;
         // Function to calculate MD5 hash
         function calculateMD5(file) {
             return new Promise((resolve, reject) => {
@@ -96,10 +97,12 @@
                 }
                 acceptAgreement(md5Hash).then(() => {
                     console.log('Agreement accepted. Refreshing agreement details.');
-                    setTimeout(() => {
+
+                    setInterval(() => {
                         loadAgreement(md5Hash);
                     }, 3000);
                     
+
                 });
             } catch (error) {
                 console.error('Error accepting agreement:', error);
