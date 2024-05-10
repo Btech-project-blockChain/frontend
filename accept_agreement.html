@@ -83,10 +83,12 @@
                                 document.getElementById('accept-button').disabled = false;
                             }
                         }
-                        if(acceptanceStatus[i]) {
+                        else{
+                            if(acceptanceStatus[i]) {
                             document.getElementById('participants').innerHTML += `<p><span style="color:green;">&#x2714; Accepted &nbsp; &nbsp; &nbsp;</span> ${acceptors[i]}</p>`;
-                        } else {
-                            document.getElementById('participants').innerHTML += `<p> <span style="color:red;">&#x274C; Not Accepted </span> ${acceptors[i]}</p>`;
+                            } else {
+                                document.getElementById('participants').innerHTML += `<p> <span style="color:red;">&#x274C; Not Accepted </span> ${acceptors[i]}</p>`;
+                            }
                         }
                     }
                 }
